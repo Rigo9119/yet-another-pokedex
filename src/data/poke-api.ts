@@ -25,3 +25,29 @@ export async function getResourceById(resource: string, id: string) {
 
   return data;
 }
+
+export async function infinteScrollFetch(
+  resource: string = "pokemon",
+  pageParam: number = 0,
+) {
+  const listRes = await fetch(
+    `${BASE_URL}${resource}?offset=${pageParam}&limit=20`,
+  );
+
+  if (!listRes.ok) {
+    throw new Error(`Failed to fetch resource: ${resource}`);
+  }
+
+  const list = await listRes.json();
+
+  const details = await Promise.all(
+    list.results.map((pokemonResource: Resource) =>
+      fetch(pokemonResource.url).then((res) => res.json()),
+    ),
+  );
+
+  return {
+    pokemons: details as Pokemon[],
+    nextOffset: list.next ? pageParam + 20 : undefined,
+  };
+}

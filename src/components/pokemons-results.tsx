@@ -1,13 +1,12 @@
 import { type Pokemon } from "@/data/types";
 import PokemonImageCard from "./pokemon-image-card";
-import { type UseQueryResult } from "@tanstack/react-query";
 
 export interface PokemonsResultsProps {
   isSearchLoading: boolean;
   isListLoading: boolean;
   isSearching: boolean;
   searchData: Pokemon;
-  filteredPokemons: UseQueryResult<Pokemon>[];
+  filteredPokemons: Pokemon[];
 }
 
 export default function PokemonsResults({
@@ -25,6 +24,6 @@ export default function PokemonsResults({
   }
 
   return filteredPokemons.map((pokemon, index) => (
-    <PokemonImageCard key={index} pokemon={pokemon.data as Pokemon} />
+    <PokemonImageCard key={index} pokemon={pokemon as Pokemon} />
   ));
 }
