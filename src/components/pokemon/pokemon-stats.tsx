@@ -1,10 +1,12 @@
+import { memo } from "react";
 import { Stat } from "@/data/types";
+import { m } from "@/paraglide/messages";
 
-export default function PokemonStats({ stats }: { stats: Stat[] }) {
+function PokemonStats({ stats }: { stats: Stat[] }) {
   return (
     <div className="flex flex-col p-2 border border-transparent rounded-md bg-red-400">
       <div className="mb-2">
-        <h3 className="text-amber-300 font-bold">Stats</h3>
+        <h3 className="text-amber-300 font-bold">{m.stats_title()}</h3>
       </div>
       <div>
         {(stats ?? []).map((stat: Stat, index: number) => {
@@ -21,3 +23,5 @@ export default function PokemonStats({ stats }: { stats: Stat[] }) {
     </div>
   );
 }
+
+export default memo(PokemonStats);

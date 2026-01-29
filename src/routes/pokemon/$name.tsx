@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { getResourceById } from "@/data/poke-api";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -7,6 +8,7 @@ import PokemonImage from "@/components/pokemon/pokemon-image";
 import PokemonTypeAbility from "@/components/pokemon/pokemon-type-ability";
 import PokemonIndividualSpec from "@/components/pokemon/pokemon-individual-spec";
 import PokemonStats from "@/components/pokemon/pokemon-stats";
+import { m } from "@/paraglide/messages";
 
 export const Route = createFileRoute("/pokemon/$name")({
   component: PokemonPage,
@@ -18,6 +20,10 @@ function PokemonPage() {
     queryKey: ["pokemon", name],
     queryFn: () => getResourceById("pokemon", name),
   });
+
+  const memoizeStats = useMemo(() => data?.stats, [data?.stats]);
+  const memoizedAbilities = useMemo(() => data?.abilities, [data?.abilities]);
+  const memoizedTypes = useMemo(() => data?.types, [data?.types]);
 
   return (
     <div className="flex flex-col content-center gap-4 min-h-screen bg-red-600 p-4">
@@ -36,25 +42,28 @@ function PokemonPage() {
         backSrc={data?.sprites.back_default as string}
       />
       <PokemonTypeAbility
-        title={(data?.types.length as number) >= 2 ? "Types" : "Type"}
-        listItems={data?.types as PokemonType[]}
+        title={m.types_title()}
+        listItems={memoizedTypes as PokemonType[]}
       />
       <div className="flex gap-2 justify-between w-full">
-        <PokemonIndividualSpec specTitle="Id" specData={data?.id as number} />
         <PokemonIndividualSpec
-          specTitle="Weight"
+          specTitle={m.id_title()}
+          specData={data?.id as number}
+        />
+        <PokemonIndividualSpec
+          specTitle={m.weight_title()}
           specData={data?.weight as number}
         />
         <PokemonIndividualSpec
-          specTitle="Height"
+          specTitle={m.height_title()}
           specData={data?.height as number}
         />
       </div>
       <PokemonTypeAbility
-        title="Types"
-        listItems={data?.abilities as Ability[]}
+        title={m.abilities_title()}
+        listItems={memoizedAbilities as Ability[]}
       />
-      <PokemonStats stats={data?.stats as Stat[]} />
+      <PokemonStats stats={memoizeStats as Stat[]} />
     </div>
   );
 }

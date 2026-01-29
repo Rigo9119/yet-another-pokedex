@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Ability, PokemonType } from "@/data/types";
 
 export interface PokemonTypeAbilityProps {
@@ -5,10 +6,7 @@ export interface PokemonTypeAbilityProps {
   listItems: PokemonType[] | Ability[];
 }
 
-export default function PokemonTypeAbility({
-  title,
-  listItems,
-}: PokemonTypeAbilityProps) {
+function PokemonTypeAbility({ title, listItems }: PokemonTypeAbilityProps) {
   return (
     <div className="flex flex-col p-2 border border-transparent rounded-md bg-red-400">
       <h3 className="flex justify-center text-amber-300 font-bold w-full">
@@ -26,3 +24,5 @@ export default function PokemonTypeAbility({
     </div>
   );
 }
+
+export default memo(PokemonTypeAbility);

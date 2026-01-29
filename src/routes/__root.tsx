@@ -4,6 +4,8 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import appCss from "../styles.css?url";
+import Header from "@/components/header";
+import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -34,15 +36,13 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang={getLocale()}>
       <head>
         <HeadContent />
       </head>
       <body>
         <main className="flex flex-col bg-red-600">
-          <h1 className="text-center px-4 py-2 w-full font-bold text-3xl text-amber-300">
-            Pokedex
-          </h1>
+          <Header />
           {children}
         </main>
         <TanStackDevtools

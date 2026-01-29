@@ -7,10 +7,16 @@ A checklist of advanced React concepts to implement in this Pokedex project.
 ## Currently Implemented
 
 - [x] TanStack Router (file-based routing)
-- [x] TanStack Query (`useQuery`, `useQueries`)
+- [x] TanStack Query (`useQuery`, `useInfiniteQuery`)
 - [x] TypeScript with React
 - [x] Functional components with props
 - [x] Type narrowing with union types (`in` operator)
+- [x] Custom hooks (`useDebounce`, `useIntersectionObserver`)
+- [x] Infinite scroll with Intersection Observer API
+- [x] `useCallback` for memoization
+- [x] Debounced search with API lookup
+- [x] Loading states for list and search
+- [x] Component extraction (`PokemonsResults`)
 
 ---
 
@@ -159,6 +165,82 @@ useQuery({
 4. **Then:** Add pagination or infinite scroll with React Query
 5. **Then:** Create custom hooks for reusable logic
 6. **Finally:** Compound components for Pokemon cards
+
+---
+
+## Feature Ideas to Implement
+
+### High Priority
+
+| Feature | Description | Concepts to Learn |
+|---------|-------------|-------------------|
+| **Language Selector (i18n)** | Support English, Spanish, and Korean | Context API, custom hooks, JSON translations |
+| **Favorites System** | Heart icon on cards, persist to localStorage | Context API, `useReducer`, localStorage |
+| **Filter by Type** | Filter Pokemon by type (Fire, Water, etc.) | `useMemo`, derived state, URL params |
+| **Dark/Light Theme** | Toggle between dark and light mode | Context API, CSS variables |
+
+### Medium Priority
+
+| Feature | Description | Concepts to Learn |
+|---------|-------------|-------------------|
+| **Pokemon Comparison Modal** | Compare two Pokemon side by side | Portals, compound components |
+| **Sorting** | Sort by name, ID, or stats | `useMemo`, controlled selects |
+| **View Toggle** | Switch between grid and list view | State management, conditional styling |
+| **Recently Viewed** | Track and display recently viewed Pokemon | `useEffect`, localStorage |
+
+### Fun Additions
+
+| Feature | Description | Concepts to Learn |
+|---------|-------------|-------------------|
+| **Random Pokemon Button** | Show a random Pokemon | Simple state, API call |
+| **Team Builder** | Pick 6 Pokemon for your team | `useReducer`, drag & drop (advanced) |
+| **Pokemon Detail Modal** | View details without leaving page | Portals, focus trap, keyboard handling |
+
+---
+
+## Language Selector (i18n) Implementation Plan
+
+### Structure
+
+```
+src/
+├── i18n/
+│   ├── translations/
+│   │   ├── en.json
+│   │   ├── es.json
+│   │   └── ko.json
+│   ├── LanguageContext.tsx
+│   └── useTranslation.ts
+```
+
+### Concepts Involved
+
+| Concept | Purpose |
+|---------|---------|
+| Context API | Store current language globally |
+| Custom hook (`useTranslation`) | Access translations in components |
+| JSON files | Store translated strings |
+| localStorage | Persist language preference |
+| Type safety | Type the translation keys |
+
+### Example Usage
+
+```tsx
+const { t, language, setLanguage } = useTranslation();
+
+return (
+  <div>
+    <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+      <option value="ko">한국어</option>
+    </select>
+
+    <h1>{t("welcome")}</h1>
+    <p>{t("pokemonCount", { count: 20 })}</p>
+  </div>
+);
+```
 
 ---
 

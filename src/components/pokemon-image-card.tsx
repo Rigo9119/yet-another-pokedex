@@ -1,3 +1,4 @@
+import React from "react";
 import { Pokemon } from "@/data/types";
 import { Link } from "@tanstack/react-router";
 
@@ -5,13 +6,13 @@ export interface PokemonImageCardProps {
   pokemon: Pokemon;
 }
 
-export default function PokemonImageCard({ pokemon }: PokemonImageCardProps) {
+function PokemonImageCard({ pokemon }: PokemonImageCardProps) {
   const imageSrc = pokemon?.sprites?.front_default as unknown as string;
 
   return (
     <Link
       to={`/pokemon/${pokemon?.name}` as string}
-      className="flex flex-col gap-2 bg-white border border-transparent rounded-md"
+      className="flex flex-col gap-2 bg-white border border-transparent rounded-md md:w-1/6"
     >
       <div className="flex justify-center content-center bg-white">
         <img className="w-full" src={imageSrc} alt={pokemon?.name} />
@@ -22,3 +23,5 @@ export default function PokemonImageCard({ pokemon }: PokemonImageCardProps) {
     </Link>
   );
 }
+
+export default React.memo(PokemonImageCard);

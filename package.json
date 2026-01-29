@@ -6,7 +6,8 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",
@@ -36,6 +37,8 @@
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
     "vitest": "^3.0.5",
-    "web-vitals": "^5.1.0"
+    "web-vitals": "^5.1.0",
+    "@inlang/paraglide-js": "^2.9.1",
+    "@inlang/cli": "^3.0.0"
   }
 }

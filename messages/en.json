@@ -1,0 +1,11 @@
+{
+  "index_page_title": "Pokedex",
+  "search_placeholder": "Search pokemon...",
+  "loading_message": "Loading...",
+  "types_title": "Types",
+  "weight_title": "Weight",
+  "height_title": "Height",
+  "abilities_title": "Abilities",
+  "stats_title": "Stats",
+  "id_title": "ID"
+}

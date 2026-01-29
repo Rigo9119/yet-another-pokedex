@@ -6,6 +6,8 @@ import { useCallback, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import PokemonsResults from "@/components/pokemons-results";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import LoadingCmp from "@/components/loaders";
+import { m } from "@/paraglide/messages";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -57,7 +59,7 @@ function App() {
           onChange={handleSearch}
         />
       </section>
-      <section className="flex flex-col gap-6 w-full">
+      <section className="flex flex-col gap-6 w-full md:flex-row md:flex-wrap">
         <PokemonsResults
           isListLoading={isLoading}
           isSearchLoading={searchQuery.isLoading}
@@ -65,7 +67,11 @@ function App() {
           searchData={searchQuery.data as Pokemon}
           filteredPokemons={filteredPokemons}
         />
-        <div ref={sentinelRef}>{isFetchingNextPage && <p>Loading more</p>}</div>
+        {searchQuery.isLoading ? null : (
+          <div ref={sentinelRef}>
+            {isFetchingNextPage && <LoadingCmp message={m.loading_message()} />}
+          </div>
+        )}
       </section>
     </div>
   );
