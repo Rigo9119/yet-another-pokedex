@@ -20,6 +20,7 @@ export type Pokemon = {
   id: number;
   is_default: boolean;
   location_area_encounters: string;
+  localized_name: string;
   moves: Move[];
   name: string;
   order: number;
@@ -83,4 +84,9 @@ export type Stat = {
 export type PokemonType = {
   slot: number;
   type: Resource;
+};
+
+export type LocalizedName = {
+  name: string;
+  language: Resource;
 };

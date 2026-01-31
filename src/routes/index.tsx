@@ -1,6 +1,6 @@
 import { getResourceById, infinteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery, useInfiniteQuery, useQueries } from "@tanstack/react-query";
 import { type Pokemon } from "@/data/types";
 import { useCallback, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
@@ -8,30 +8,63 @@ import PokemonsResults from "@/components/pokemons-results";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import LoadingCmp from "@/components/loaders";
 import { m } from "@/paraglide/messages";
+import {
+  DEBOUNCE_DELAY,
+  DEBOUNCE_SEARCH_LENGHT,
+  INITIAL_PAGE_PARAM,
+} from "@/constants";
+import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
 function App() {
+  const locale = getLocale();
   const [search, setSearch] = useState<string>("");
-  const debounceSearch = useDebounce(search, 300);
+  const debounceSearch = useDebounce(search, DEBOUNCE_DELAY);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ["pokemon", "infinite"],
-      queryFn: ({ pageParam = 0 }) => infinteScrollFetch("pokemon", pageParam),
+      queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) =>
+        infinteScrollFetch("pokemon", pageParam),
       getNextPageParam: (lastPage) => lastPage.nextOffset,
-      initialPageParam: 0,
+      initialPageParam: INITIAL_PAGE_PARAM,
     });
   const allPokemons = data?.pages.flatMap((page) => page.pokemons) ?? [];
+
+  const speciesQueries = useQueries({
+    queries: allPokemons.map((pokemon) => ({
+      queryKey: ["pokemon-species", pokemon.id],
+      queryFn: () =>
+        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`).then(
+          (r) => r.json(),
+        ),
+      staleTime: Infinity,
+    })),
+  });
+
+  const pokemonsWithLocalizedNames = allPokemons.map((pokemon, index) => {
+    const species = speciesQueries[index]?.data;
+    const localizedName =
+      species?.names?.find(
+        (n: { language: { name: string }; name: string }) =>
+          n.language.name === locale,
+      )?.name ?? pokemon.name;
+
+    return { ...pokemon, localizedName };
+  });
+
   const searchQuery = useQuery({
     queryKey: ["pokemon", "search", debounceSearch],
     queryFn: () => getResourceById("pokemon", debounceSearch),
-    enabled: debounceSearch.length >= 3,
+    enabled: debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT,
   });
 
-  const filteredPokemons = allPokemons.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(search.toLowerCase()),
+  const filteredPokemons = pokemonsWithLocalizedNames.filter(
+    (pokemon) =>
+      pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
+      pokemon.localizedName.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleLoadMore = useCallback(() => {
@@ -53,7 +86,7 @@ function App() {
       <section className="flex flex-col gap-6 w-full">
         <input
           type="text"
-          placeholder="Search pokemons..."
+          placeholder={m.search_placeholder()}
           className="bg-white border border-transparent rounded-md px-4 py-2"
           value={search}
           onChange={handleSearch}
@@ -63,7 +96,7 @@ function App() {
         <PokemonsResults
           isListLoading={isLoading}
           isSearchLoading={searchQuery.isLoading}
-          isSearching={debounceSearch.length >= 3}
+          isSearching={debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT}
           searchData={searchQuery.data as Pokemon}
           filteredPokemons={filteredPokemons}
         />

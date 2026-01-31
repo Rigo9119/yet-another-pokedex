@@ -24,7 +24,7 @@ function PokemonPage() {
   const memoizeStats = useMemo(() => data?.stats, [data?.stats]);
   const memoizedAbilities = useMemo(() => data?.abilities, [data?.abilities]);
   const memoizedTypes = useMemo(() => data?.types, [data?.types]);
-
+  console.log("pokemon: ", data);
   return (
     <div className="flex flex-col content-center gap-4 min-h-screen bg-red-600 p-4">
       <div className="flex justify-between content-center border border-transparent rounded-md  bg-red-400 p-2">

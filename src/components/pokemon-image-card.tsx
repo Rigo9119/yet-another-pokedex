@@ -18,7 +18,7 @@ function PokemonImageCard({ pokemon }: PokemonImageCardProps) {
         <img className="w-full" src={imageSrc} alt={pokemon?.name} />
       </div>
       <div className="flex justify-center content-center border border-transparent rounded-md  bg-red-400">
-        <h3 className="text-white">{pokemon?.name}</h3>
+        <h3 className="text-white">{pokemon?.localized_name}</h3>
       </div>
     </Link>
   );
