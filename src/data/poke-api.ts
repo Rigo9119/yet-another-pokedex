@@ -1,5 +1,5 @@
 import { INITIAL_PAGE_PARAM } from "@/constants";
-import { Pokemon, PokemonLocalized, Resource } from "./types";
+import { Pokemon, Resource } from "./types";
 
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
@@ -27,7 +27,7 @@ export async function getResourceById(resource: string, id: string | number) {
   return data;
 }
 
-export async function infinteScrollFetch(
+export async function inifiniteScrollFetch(
   resource: string = "pokemon",
   pageParam: number = INITIAL_PAGE_PARAM,
 ): Promise<{ pokemons: Pokemon[]; nextOffset?: number }> {

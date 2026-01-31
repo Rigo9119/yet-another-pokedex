@@ -23,7 +23,7 @@ export default function PokemonsResults({
     return <PokemonImageCard pokemon={searchData} />;
   }
 
-  return filteredPokemons.map((pokemon, index) => (
-    <PokemonImageCard key={index} pokemon={pokemon} />
+  return filteredPokemons.map((pokemon) => (
+    <PokemonImageCard key={pokemon.id} pokemon={pokemon} />
   ));
 }

@@ -1,11 +1,7 @@
-import { getResourceById, infinteScrollFetch } from "@/data/poke-api";
+import { getResourceById, inifiniteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useInfiniteQuery, useQueries } from "@tanstack/react-query";
-import {
-  LocalizedName,
-  type Pokemon,
-  type PokemonLocalized,
-} from "@/data/types";
+import { LocalizedName, type PokemonLocalized } from "@/data/types";
 import { useCallback, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import PokemonsResults from "@/components/pokemons-results";
@@ -31,7 +27,7 @@ function App() {
     useInfiniteQuery({
       queryKey: ["pokemon", "infinite"],
       queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) =>
-        infinteScrollFetch("pokemon", pageParam),
+        inifiniteScrollFetch("pokemon", pageParam),
       getNextPageParam: (lastPage) => lastPage.nextOffset,
       initialPageParam: INITIAL_PAGE_PARAM,
     });
