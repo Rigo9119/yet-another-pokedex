@@ -1,9 +1,9 @@
 import React from "react";
-import { Pokemon } from "@/data/types";
+import { type PokemonLocalized } from "@/data/types";
 import { Link } from "@tanstack/react-router";
 
 export interface PokemonImageCardProps {
-  pokemon: Pokemon;
+  pokemon: PokemonLocalized;
 }
 
 function PokemonImageCard({ pokemon }: PokemonImageCardProps) {

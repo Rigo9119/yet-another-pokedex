@@ -1,9 +1,9 @@
 import { INITIAL_PAGE_PARAM } from "@/constants";
-import { Pokemon, Resource } from "./types";
+import { Pokemon, PokemonLocalized, Resource } from "./types";
 
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
-export async function getResources(resource: string) {
+export async function getResources(resource: string): Promise<Resource[]> {
   const response = await fetch(`${BASE_URL}${resource}`);
 
   if (!response.ok) {
@@ -15,14 +15,14 @@ export async function getResources(resource: string) {
   return results;
 }
 
-export async function getResourceById(resource: string, id: string) {
-  const response = await fetch(`${BASE_URL}/${resource}/${id}`);
+export async function getResourceById(resource: string, id: string | number) {
+  const response = await fetch(`${BASE_URL}${resource}/${id}`);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch resource: ${resource}/${id}`);
   }
 
-  const data = (await response.json()) as Pokemon;
+  const data = await response.json();
 
   return data;
 }
@@ -30,7 +30,7 @@ export async function getResourceById(resource: string, id: string) {
 export async function infinteScrollFetch(
   resource: string = "pokemon",
   pageParam: number = INITIAL_PAGE_PARAM,
-) {
+): Promise<{ pokemons: Pokemon[]; nextOffset?: number }> {
   const listRes = await fetch(
     `${BASE_URL}${resource}?offset=${pageParam}&limit=20`,
   );

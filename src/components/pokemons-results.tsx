@@ -1,12 +1,12 @@
-import { type Pokemon } from "@/data/types";
+import { type PokemonLocalized } from "@/data/types";
 import PokemonImageCard from "./pokemon-image-card";
 
 export interface PokemonsResultsProps {
   isSearchLoading: boolean;
   isListLoading: boolean;
   isSearching: boolean;
-  searchData: Pokemon;
-  filteredPokemons: Pokemon[];
+  searchData: PokemonLocalized;
+  filteredPokemons: PokemonLocalized[];
 }
 
 export default function PokemonsResults({
@@ -24,6 +24,6 @@ export default function PokemonsResults({
   }
 
   return filteredPokemons.map((pokemon, index) => (
-    <PokemonImageCard key={index} pokemon={pokemon as Pokemon} />
+    <PokemonImageCard key={index} pokemon={pokemon} />
   ));
 }

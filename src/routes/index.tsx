@@ -1,7 +1,11 @@
 import { getResourceById, infinteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useInfiniteQuery, useQueries } from "@tanstack/react-query";
-import { type Pokemon } from "@/data/types";
+import {
+  LocalizedName,
+  type Pokemon,
+  type PokemonLocalized,
+} from "@/data/types";
 import { useCallback, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import PokemonsResults from "@/components/pokemons-results";
@@ -35,24 +39,19 @@ function App() {
 
   const speciesQueries = useQueries({
     queries: allPokemons.map((pokemon) => ({
-      queryKey: ["pokemon-species", pokemon.id],
-      queryFn: () =>
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`).then(
-          (r) => r.json(),
-        ),
+      queryKey: ["pokemon-species", pokemon.name],
+      queryFn: () => getResourceById("pokemon-species", pokemon.name),
       staleTime: Infinity,
     })),
   });
 
   const pokemonsWithLocalizedNames = allPokemons.map((pokemon, index) => {
     const species = speciesQueries[index]?.data;
-    const localizedName =
-      species?.names?.find(
-        (n: { language: { name: string }; name: string }) =>
-          n.language.name === locale,
-      )?.name ?? pokemon.name;
+    const localized_name =
+      species?.names?.find((n: LocalizedName) => n.language.name === locale)
+        ?.name ?? pokemon.name;
 
-    return { ...pokemon, localizedName };
+    return { ...pokemon, localized_name };
   });
 
   const searchQuery = useQuery({
@@ -64,7 +63,7 @@ function App() {
   const filteredPokemons = pokemonsWithLocalizedNames.filter(
     (pokemon) =>
       pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
-      pokemon.localizedName.toLowerCase().includes(search.toLowerCase()),
+      pokemon.localized_name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const handleLoadMore = useCallback(() => {
@@ -97,8 +96,8 @@ function App() {
           isListLoading={isLoading}
           isSearchLoading={searchQuery.isLoading}
           isSearching={debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT}
-          searchData={searchQuery.data as Pokemon}
-          filteredPokemons={filteredPokemons}
+          searchData={searchQuery.data as PokemonLocalized}
+          filteredPokemons={filteredPokemons as PokemonLocalized[]}
         />
         {searchQuery.isLoading ? null : (
           <div ref={sentinelRef}>
