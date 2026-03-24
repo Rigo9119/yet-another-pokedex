@@ -3,18 +3,6 @@ import { Pokemon, Resource } from "./types";
 
 const BASE_URL = "https://pokeapi.co/api/v2/";
 
-export async function getResources(resource: string): Promise<Resource[]> {
-  const response = await fetch(`${BASE_URL}${resource}`);
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch resource: ${resource}`);
-  }
-
-  const { results } = (await response.json()) as { results: Resource[] };
-
-  return results;
-}
-
 export async function getResourceById(resource: string, id: string | number) {
   const response = await fetch(`${BASE_URL}${resource}/${id}`);
 
@@ -25,6 +13,18 @@ export async function getResourceById(resource: string, id: string | number) {
   const data = await response.json();
 
   return data;
+}
+
+export async function getAllPokemons(): Promise<Resource[]> {
+  const response = await fetch(`${BASE_URL}pokemon?limit=100000&offset=0`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch resource: all pokemons list`);
+  }
+
+  const { results } = (await response.json()) as { results: Resource[] };
+
+  return results;
 }
 
 export async function inifiniteScrollFetch(

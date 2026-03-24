@@ -1,5 +1,5 @@
 import { getResourceById } from "@/data/poke-api";
-import { PokemonLocalized } from "@/data/types";
+import { LocalizedName, PokemonLocalized } from "@/data/types";
 import { getLocale } from "@/paraglide/runtime";
 import { useQuery } from "@tanstack/react-query";
 
@@ -25,10 +25,10 @@ export default function usePokemonData(name: string): UsePokemonData {
     queryFn: () => getResourceById("pokemon-species", name),
   });
 
-  const localizedName = speciesData?.names.find(
-    (name: { language: { name: string }; name: string }) =>
-      name.language.name === locale,
-  )?.name;
+  const localizedName =
+    speciesData?.names.find(
+      (name: LocalizedName) => name.language.name === locale,
+    )?.name ?? name;
 
   if (!data || !speciesData) {
     return {

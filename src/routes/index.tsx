@@ -14,6 +14,7 @@ import {
   INITIAL_PAGE_PARAM,
 } from "@/constants";
 import { getLocale } from "@/paraglide/runtime";
+import useSearchPokemon from "@/hooks/useSearchPokemon";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -23,6 +24,9 @@ function App() {
   const locale = getLocale();
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search, DEBOUNCE_DELAY);
+  const { loadingSearch, errorSearch, pokemonsSearch } =
+    useSearchPokemon(search);
+
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useInfiniteQuery({
       queryKey: ["pokemon", "infinite"],
@@ -32,11 +36,10 @@ function App() {
       initialPageParam: INITIAL_PAGE_PARAM,
     });
   const allPokemons = data?.pages.flatMap((page) => page.pokemons) ?? [];
-
   const speciesQueries = useQueries({
     queries: allPokemons.map((pokemon) => ({
-      queryKey: ["pokemon-species", pokemon.name],
-      queryFn: () => getResourceById("pokemon-species", pokemon.name),
+      queryKey: ["infinite-scroll", pokemon.name],
+      queryFn: () => getResourceById("pokemon-species", pokemon.species.name),
       staleTime: Infinity,
     })),
   });
@@ -49,18 +52,6 @@ function App() {
 
     return { ...pokemon, localized_name };
   });
-
-  const searchQuery = useQuery({
-    queryKey: ["pokemon", "search", debounceSearch],
-    queryFn: () => getResourceById("pokemon", debounceSearch),
-    enabled: debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT,
-  });
-
-  const filteredPokemons = pokemonsWithLocalizedNames.filter(
-    (pokemon) =>
-      pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
-      pokemon.localized_name.toLowerCase().includes(search.toLowerCase()),
-  );
 
   const handleLoadMore = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -90,12 +81,12 @@ function App() {
       <section className="flex flex-col gap-6 w-full md:flex-row md:flex-wrap">
         <PokemonsResults
           isListLoading={isLoading}
-          isSearchLoading={searchQuery.isLoading}
+          isSearchLoading={loadingSearch}
           isSearching={debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT}
-          searchData={searchQuery.data as PokemonLocalized}
-          filteredPokemons={filteredPokemons as PokemonLocalized[]}
+          searchData={pokemonsSearch}
+          filteredPokemons={pokemonsWithLocalizedNames}
         />
-        {searchQuery.isLoading ? null : (
+        {loadingSearch ? null : (
           <div ref={sentinelRef}>
             {isFetchingNextPage && <LoadingCmp message={m.loading_message()} />}
           </div>

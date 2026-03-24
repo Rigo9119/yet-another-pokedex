@@ -5,7 +5,7 @@ export interface PokemonsResultsProps {
   isSearchLoading: boolean;
   isListLoading: boolean;
   isSearching: boolean;
-  searchData: PokemonLocalized;
+  searchData: PokemonLocalized[];
   filteredPokemons: PokemonLocalized[];
 }
 
@@ -20,7 +20,13 @@ export default function PokemonsResults({
   if (isListLoading) return <h4>Loading Pokemon...</h4>;
 
   if (isSearching && searchData) {
-    return <PokemonImageCard pokemon={searchData} />;
+    return (
+      <>
+        {searchData.map((pokemon) => (
+          <PokemonImageCard key={pokemon.id} pokemon={pokemon} />
+        ))}
+      </>
+    );
   }
 
   return filteredPokemons.map((pokemon) => (

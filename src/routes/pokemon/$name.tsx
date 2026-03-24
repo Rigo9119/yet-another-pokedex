@@ -24,17 +24,9 @@ function PokemonPage() {
   );
   const memoizedTypes = useMemo(() => pokemon?.types, [pokemon?.types]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading data</div>;
-  }
-
-  if (!pokemon) {
-    return <div>Pokemon not found</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data</div>;
+  if (!pokemon) return <div>Pokemon not found</div>;
 
   return (
     <div className="flex flex-col content-center gap-4 min-h-screen bg-red-600 p-4">
