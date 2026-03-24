@@ -147,4 +147,26 @@ export type Variety = {
 
 export type PokemonLocalized = Pokemon & {
   localized_name: string;
+  flavor_text: string;
+  evolution_chain_url: string;
+};
+
+export type PokemonEvolution = {
+  baby_trigger_item: Resource | null;
+  chain: EvolutionChain;
+  id: number;
+};
+
+export type EvolutionChain = {
+  evolution_details: [];
+  evolves_to: EvolutionChain[];
+  is_baby: boolean;
+  species: Resource;
+};
+
+export type EvolutionStage = {
+  name: string;
+  localized_name: string;
+  sprite: string;
+  evolves_to: EvolutionStage[];
 };

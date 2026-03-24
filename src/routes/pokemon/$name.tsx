@@ -8,6 +8,9 @@ import PokemonIndividualSpec from "@/components/pokemon/pokemon-individual-spec"
 import PokemonStats from "@/components/pokemon/pokemon-stats";
 import { m } from "@/paraglide/messages";
 import usePokemonData from "@/hooks/usePokemonData";
+import LoadingCmp from "@/components/loaders";
+import ErrorCmp from "@/components/error-cmp";
+import usePokemonEvolution from "@/hooks/usePokemonEvolution";
 
 export const Route = createFileRoute("/pokemon/$name")({
   component: PokemonPage,
@@ -16,7 +19,8 @@ export const Route = createFileRoute("/pokemon/$name")({
 function PokemonPage() {
   const { name } = Route.useParams();
   const { isLoading, isError, pokemon } = usePokemonData(name);
-
+  const { data } = usePokemonEvolution(pokemon?.evolution_chain_url);
+  console.log("pokemon-evolution", data);
   const memoizeStats = useMemo(() => pokemon?.stats, [pokemon?.stats]);
   const memoizedAbilities = useMemo(
     () => pokemon?.abilities,
@@ -24,8 +28,8 @@ function PokemonPage() {
   );
   const memoizedTypes = useMemo(() => pokemon?.types, [pokemon?.types]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data</div>;
+  if (isLoading) return <LoadingCmp variant="spinner" />;
+  if (isError) return <ErrorCmp displayBtn message={"Error loading data"} />;
   if (!pokemon) return <div>Pokemon not found</div>;
 
   return (
@@ -44,6 +48,11 @@ function PokemonPage() {
         backAlt={pokemon.name as string}
         backSrc={pokemon.sprites.back_default as string}
       />
+      <div className="flex flex-col p-2 border border-transparent rounded-md bg-red-400">
+        <p className="flex justify-center text-white font-medium w-full">
+          {pokemon.flavor_text}
+        </p>
+      </div>
       <PokemonTypeAbility
         title={m.types_title()}
         listItems={memoizedTypes as PokemonType[]}

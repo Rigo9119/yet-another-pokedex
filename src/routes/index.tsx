@@ -1,6 +1,6 @@
 import { getResourceById, inifiniteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery, useInfiniteQuery, useQueries } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
 import { LocalizedName, type PokemonLocalized } from "@/data/types";
 import { useCallback, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
@@ -22,19 +22,26 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const locale = getLocale();
+  const loadingArr = new Array({ length: 20 });
   const [search, setSearch] = useState<string>("");
   const debounceSearch = useDebounce(search, DEBOUNCE_DELAY);
   const { loadingSearch, errorSearch, pokemonsSearch } =
     useSearchPokemon(search);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteQuery({
-      queryKey: ["pokemon", "infinite"],
-      queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) =>
-        inifiniteScrollFetch("pokemon", pageParam),
-      getNextPageParam: (lastPage) => lastPage.nextOffset,
-      initialPageParam: INITIAL_PAGE_PARAM,
-    });
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = useInfiniteQuery({
+    queryKey: ["pokemon", "infinite"],
+    queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) =>
+      inifiniteScrollFetch("pokemon", pageParam),
+    getNextPageParam: (lastPage) => lastPage.nextOffset,
+    initialPageParam: INITIAL_PAGE_PARAM,
+  });
   const allPokemons = data?.pages.flatMap((page) => page.pokemons) ?? [];
   const speciesQueries = useQueries({
     queries: allPokemons.map((pokemon) => ({
@@ -84,13 +91,15 @@ function App() {
           isSearchLoading={loadingSearch}
           isSearching={debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT}
           searchData={pokemonsSearch}
-          filteredPokemons={pokemonsWithLocalizedNames}
+          filteredPokemons={pokemonsWithLocalizedNames as PokemonLocalized[]}
+          isListError={isError}
+          isSearchError={errorSearch}
         />
-        {loadingSearch ? null : (
-          <div ref={sentinelRef}>
-            {isFetchingNextPage && <LoadingCmp message={m.loading_message()} />}
-          </div>
-        )}
+        {isFetchingNextPage &&
+          loadingArr.map((item, index) => (
+            <LoadingCmp variant="skeleton" key={index} />
+          ))}
+        {loadingSearch ? null : <div ref={sentinelRef} />}
       </section>
     </div>
   );

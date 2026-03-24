@@ -1,5 +1,5 @@
 import { getResourceById } from "@/data/poke-api";
-import { LocalizedName, PokemonLocalized } from "@/data/types";
+import { FlavorTextEntry, LocalizedName, PokemonLocalized } from "@/data/types";
 import { getLocale } from "@/paraglide/runtime";
 import { useQuery } from "@tanstack/react-query";
 
@@ -37,6 +37,11 @@ export default function usePokemonData(name: string): UsePokemonData {
       pokemon: undefined,
     };
   }
+  const flavorText = speciesData.flavor_text_entries.filter(
+    (entry: FlavorTextEntry) => entry.language.name === locale,
+  );
+
+  const lastFlavorText = flavorText[flavorText.length - 1]?.flavor_text ?? "";
 
   return {
     isLoading: isLoading || isSpeciesLoading,
@@ -44,6 +49,8 @@ export default function usePokemonData(name: string): UsePokemonData {
     pokemon: {
       ...data,
       localized_name: localizedName,
+      flavor_text: lastFlavorText,
+      evolution_chain_url: speciesData?.evolution_chain?.url,
     },
   };
 }
