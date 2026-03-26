@@ -11,6 +11,7 @@ import usePokemonData from "@/hooks/usePokemonData";
 import LoadingCmp from "@/components/loaders";
 import ErrorCmp from "@/components/error-cmp";
 import usePokemonEvolution from "@/hooks/usePokemonEvolution";
+import PokemonEvolutionChain from "@/components/pokemon/pokemon-evolution-chain";
 
 export const Route = createFileRoute("/pokemon/$name")({
   component: PokemonPage,
@@ -19,8 +20,7 @@ export const Route = createFileRoute("/pokemon/$name")({
 function PokemonPage() {
   const { name } = Route.useParams();
   const { isLoading, isError, pokemon } = usePokemonData(name);
-  const { data } = usePokemonEvolution(pokemon?.evolution_chain_url);
-  console.log("pokemon-evolution", data);
+  const { evolutions } = usePokemonEvolution(pokemon?.evolution_chain_url);
   const memoizeStats = useMemo(() => pokemon?.stats, [pokemon?.stats]);
   const memoizedAbilities = useMemo(
     () => pokemon?.abilities,
@@ -49,10 +49,11 @@ function PokemonPage() {
         backSrc={pokemon.sprites.back_default as string}
       />
       <div className="flex flex-col p-2 border border-transparent rounded-md bg-red-400">
-        <p className="flex justify-center text-white font-medium w-full">
+        <p className="flex justify-center text-white font-medium w-πfull">
           {pokemon.flavor_text}
         </p>
       </div>
+      <PokemonEvolutionChain evolutions={evolutions} />
       <PokemonTypeAbility
         title={m.types_title()}
         listItems={memoizedTypes as PokemonType[]}

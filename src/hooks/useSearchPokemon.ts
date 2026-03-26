@@ -51,7 +51,7 @@ export default function useSearchPokemon(name: string) {
       );
       const localized_name =
         species?.data?.names?.find(
-          (n: LocalizedName) => n.language.name === locale,
+          (name: LocalizedName) => name.language.name === locale,
         )?.name ?? pokemon?.data?.name;
 
       return {

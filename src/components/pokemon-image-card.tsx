@@ -12,7 +12,7 @@ function PokemonImageCard({ pokemon }: PokemonImageCardProps) {
   return (
     <Link
       to={`/pokemon/${pokemon?.name}` as string}
-      className="flex flex-col gap-2 bg-white border border-transparent rounded-md md:w-1/6"
+      className="flex flex-col gap-2 bg-white border border-transparent rounded-md "
     >
       <div className="flex justify-center content-center bg-white">
         <img className="w-full" src={imageSrc} alt={pokemon?.name} />
