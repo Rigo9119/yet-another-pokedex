@@ -1,18 +1,18 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
-export default function useIntersectionObserver(
-  callback: () => void,
-  options?: { enabled?: boolean },
-) {
+export default function useIntersectionObserver(options?: {
+  enabled?: boolean;
+}) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
   const targetRef = useRef(null);
 
   useEffect(() => {
+    console.log("effect ran, enabled:", options?.enabled);
     if (!options?.enabled) return;
 
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        callback();
-      }
+      console.log("observer fired", entries[0].isIntersecting);
+      setIsIntersecting(entries[0].isIntersecting);
     });
 
     const target = targetRef.current;
@@ -25,7 +25,7 @@ export default function useIntersectionObserver(
         observer.unobserve(target);
       }
     };
-  }, [callback, options?.enabled]);
+  }, [options?.enabled]);
 
-  return targetRef;
+  return [targetRef, isIntersecting];
 }

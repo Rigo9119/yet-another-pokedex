@@ -2,7 +2,7 @@ import { getResourceById, inifiniteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
 import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
 import { LocalizedName, type PokemonLocalized } from "@/data/types";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import PokemonsResults from "@/components/pokemons-results";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
@@ -37,8 +37,10 @@ function App() {
     isError,
   } = useInfiniteQuery({
     queryKey: ["pokemon", "infinite"],
-    queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) =>
-      inifiniteScrollFetch("pokemon", pageParam),
+    queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) => {
+      console.log("queryFn called, pageParam:", pageParam);
+      return inifiniteScrollFetch("pokemon", pageParam);
+    },
     getNextPageParam: (lastPage) => lastPage.nextOffset,
     initialPageParam: INITIAL_PAGE_PARAM,
   });
@@ -60,15 +62,15 @@ function App() {
     return { ...pokemon, localized_name };
   });
 
-  const handleLoadMore = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  const sentinelRef = useIntersectionObserver(handleLoadMore, {
+  const [sentinelRef, isIntersecting] = useIntersectionObserver({
     enabled: hasNextPage,
   });
+
+  useEffect(() => {
+    if (isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [isIntersecting]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -85,7 +87,7 @@ function App() {
           onChange={handleSearch}
         />
       </section>
-      <section className="flex flex-col gap-6 w-full md:flex-row md:flex-wrap">
+      <section className="flex flex-col gap-6 w-full">
         <PokemonsResults
           isListLoading={isLoading}
           isSearchLoading={loadingSearch}
@@ -96,7 +98,7 @@ function App() {
           isSearchError={errorSearch}
         />
         {isFetchingNextPage &&
-          loadingArr.map((item, index) => (
+          loadingArr.map((_, index) => (
             <LoadingCmp variant="skeleton" key={index} />
           ))}
         {loadingSearch ? null : <div ref={sentinelRef} />}
