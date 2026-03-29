@@ -17,8 +17,11 @@ export default function useSearchPokemon(name: string) {
   });
 
   const filterData =
-    allPokemons?.filter((pokemon) => pokemon.name.includes(debounceSearch)) ??
-    [];
+    debounceSearch.length >= DEBOUNCE_SEARCH_LENGHT
+      ? (allPokemons?.filter((pokemon) =>
+          pokemon.name.includes(debounceSearch),
+        ) ?? [])
+      : [];
 
   const pokemonsData = useQueries({
     queries: filterData?.map((pokemon) => ({

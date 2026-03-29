@@ -7,11 +7,9 @@ export default function useIntersectionObserver(options?: {
   const targetRef = useRef(null);
 
   useEffect(() => {
-    console.log("effect ran, enabled:", options?.enabled);
     if (!options?.enabled) return;
 
     const observer = new IntersectionObserver((entries) => {
-      console.log("observer fired", entries[0].isIntersecting);
       setIsIntersecting(entries[0].isIntersecting);
     });
 
