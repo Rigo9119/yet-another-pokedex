@@ -14,8 +14,11 @@ export default function PokemonEvolutionChain({
         Evolutions
       </h3>
       <div className="flex items-center justify-between w-full mt-4">
-        {evolutions.map((evolution) => (
-          <PokemonImageCard key={evolution.name} pokemon={evolution} />
+        {evolutions.map((evolution, index) => (
+          <PokemonImageCard
+            key={`${evolution.name}-${index}`}
+            pokemon={evolution}
+          />
         ))}
       </div>
     </div>

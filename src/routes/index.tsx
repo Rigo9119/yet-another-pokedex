@@ -38,7 +38,6 @@ function App() {
   } = useInfiniteQuery({
     queryKey: ["pokemon", "infinite"],
     queryFn: ({ pageParam = INITIAL_PAGE_PARAM }) => {
-      console.log("queryFn called, pageParam:", pageParam);
       return inifiniteScrollFetch("pokemon", pageParam);
     },
     getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -77,7 +76,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col gap-4 min-h-screen bg-red-600 p-4">
+    <div className="flex flex-col gap-4 min-h-screen bg-red-600 p-4 container m-auto">
       <section className="flex flex-col gap-6 w-full">
         <input
           type="text"
