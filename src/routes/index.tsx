@@ -61,7 +61,7 @@ function App() {
     return { ...pokemon, localized_name };
   });
 
-  const [sentinelRef, isIntersecting] = useIntersectionObserver({
+  const [targetRef, isIntersecting] = useIntersectionObserver({
     enabled: hasNextPage,
   });
 
@@ -100,7 +100,7 @@ function App() {
           loadingArr.map((_, index) => (
             <LoadingCmp variant="skeleton" key={index} />
           ))}
-        {loadingSearch ? null : <div ref={sentinelRef} />}
+        {loadingSearch ? null : <div ref={targetRef} />}
       </section>
     </div>
   );
