@@ -6,7 +6,9 @@ function PokemonStats({ stats }: { stats: Stat[] }) {
   return (
     <div className="flex flex-col p-2 border border-transparent rounded-md bg-red-400">
       <div className="mb-2">
-        <h3 className="text-amber-300 font-bold">{m.stats_title()}</h3>
+        <h3 className="text-amber-300 font-bold" data-testid="stats-title">
+          {m.stats_title()}
+        </h3>
       </div>
       <div>
         {(stats ?? []).map((stat: Stat, index: number) => {

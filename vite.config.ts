@@ -7,7 +7,7 @@ import viteTsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 
-const config = defineConfig({
+const viteConfig = defineConfig({
   plugins: [
     paraglideVitePlugin({
       project: "./project.inlang",
@@ -38,4 +38,4 @@ const config = defineConfig({
   ],
 });
 
-export default config;
+export default viteConfig;

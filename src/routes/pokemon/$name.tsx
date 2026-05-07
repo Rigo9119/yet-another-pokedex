@@ -5,13 +5,13 @@ import { CircleArrowLeft } from "lucide-react";
 import PokemonImage from "@/components/pokemon/pokemon-image";
 import PokemonTypeAbility from "@/components/pokemon/pokemon-type-ability";
 import PokemonIndividualSpec from "@/components/pokemon/pokemon-individual-spec";
-import PokemonStats from "@/components/pokemon/pokemon-stats";
+import PokemonStats from "@/components/pokemon/pokemon-stats/pokemon-stats";
 import { m } from "@/paraglide/messages";
 import usePokemonData from "@/hooks/usePokemonData";
 import LoadingCmp from "@/components/loaders";
 import ErrorCmp from "@/components/error-cmp";
 import usePokemonEvolution from "@/hooks/usePokemonEvolution";
-import PokemonEvolutionChain from "@/components/pokemon/pokemon-evolution-chain";
+import PokemonEvolutionChain from "@/components/pokemon/pokemon-evolution-chain/pokemon-evolution-chain";
 
 export const Route = createFileRoute("/pokemon/$name")({
   component: PokemonPage,
