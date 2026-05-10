@@ -1,4 +1,4 @@
-import { describe, expect, vi, test, beforeEach } from "vitest";
+import { describe, expect, vi, it, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import PokemonStats from "./pokemon-stats";
 import { Stat } from "@/data/types";
@@ -20,11 +20,11 @@ describe("PokemonStats", () => {
     render(<PokemonStats stats={mockStats} />);
   });
 
-  test("renders stats title", () => {
+  it("renders stats title", () => {
     expect(screen.getByText("Stats")).toBeInTheDocument();
   });
 
-  test("renders stats", () => {
+  it("renders stats", () => {
     expect(screen.getByText(/stat1/)).toBeInTheDocument();
     expect(screen.getByText(/stat2/)).toBeInTheDocument();
     expect(screen.getByText(/stat3/)).toBeInTheDocument();
