@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1778599757934" clover="3.2.0">
-  <project timestamp="1778599757934" name="All files">
-    <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="6" coveredmethods="6" elements="14" coveredelements="13" complexity="0" loc="6" ncloc="6" packages="4" files="4" classes="4"/>
-    <package name="pokemon-evolution-chain">
+<coverage generated="1778609606013" clover="3.2.0">
+  <project timestamp="1778609606013" name="All files">
+    <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="10" coveredmethods="10" elements="24" coveredelements="24" complexity="0" loc="10" ncloc="10" packages="7" files="7" classes="7"/>
+    <package name="app-header">
+      <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="app-header.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/app-header/app-header.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="error-cmp">
+      <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="error-cmp.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/error-cmp/error-cmp.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="9" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="pokemon.pokemon-evolution-chain">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="pokemon-evolution-chain.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/pokemon/pokemon-evolution-chain/pokemon-evolution-chain.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -10,26 +24,34 @@
         <line num="19" count="6" type="stmt"/>
       </file>
     </package>
-    <package name="pokemon-image">
+    <package name="pokemon.pokemon-image">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="pokemon-image.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/pokemon/pokemon-image/pokemon-image.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="14" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="pokemon-individual-spec">
+    <package name="pokemon.pokemon-individual-spec">
       <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <file name="pokemon-individual-spec.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/pokemon/pokemon-individual-spec/pokemon-individual-spec.tsx">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="10" count="1" type="stmt"/>
       </file>
     </package>
-    <package name="pokemon-stats">
-      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+    <package name="pokemon.pokemon-stats">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="pokemon-stats.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/pokemon/pokemon-stats/pokemon-stats.tsx">
-        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
-        <line num="6" count="2" type="stmt"/>
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="6" count="3" type="stmt"/>
         <line num="15" count="6" type="stmt"/>
+      </file>
+    </package>
+    <package name="pokemon.pokemon-type-ability">
+      <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <file name="pokemon-type-ability.tsx" path="/Users/rigoroserocastillo/dev/personal-dev/yet-another-pokedex/src/components/pokemon/pokemon-type-ability/pokemon-type-ability.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
       </file>
     </package>
   </project>

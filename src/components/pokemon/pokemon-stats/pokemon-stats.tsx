@@ -11,7 +11,7 @@ function PokemonStats({ stats }: { stats: Stat[] }) {
         </h3>
       </div>
       <div>
-        {(stats ?? []).map((stat: Stat, index: number) => {
+        {stats?.map((stat: Stat, index: number) => {
           return (
             <div key={index} className="flex justify-between">
               <p className="text-amber-300 font-medium capitalize">

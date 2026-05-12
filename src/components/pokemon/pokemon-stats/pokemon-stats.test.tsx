@@ -1,4 +1,4 @@
-import { describe, expect, vi, it, beforeEach } from "vitest";
+import { describe, expect, vi, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import PokemonStats from "./pokemon-stats";
 import { Stat } from "@/data/types";
