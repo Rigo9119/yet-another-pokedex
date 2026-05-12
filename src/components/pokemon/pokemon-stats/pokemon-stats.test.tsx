@@ -16,17 +16,20 @@ describe("PokemonStats", () => {
     { base_stat: 30, effort: 30, stat: { name: "stat3", url: "" } },
   ];
 
-  beforeEach(() => {
-    render(<PokemonStats stats={mockStats} />);
-  });
-
   it("renders stats title", () => {
+    render(<PokemonStats stats={mockStats} />);
     expect(screen.getByText("Stats")).toBeInTheDocument();
   });
 
   it("renders stats", () => {
+    render(<PokemonStats stats={mockStats} />);
     expect(screen.getByText(/stat1/)).toBeInTheDocument();
     expect(screen.getByText(/stat2/)).toBeInTheDocument();
     expect(screen.getByText(/stat3/)).toBeInTheDocument();
+  });
+
+  it("stats array its empty it should not render the component", () => {
+    const { queryByText } = render(<PokemonStats stats={[]} />);
+    expect(queryByText(/stat1/)).toBeNull();
   });
 });

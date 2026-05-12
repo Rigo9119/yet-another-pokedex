@@ -2,7 +2,7 @@ import { getResourceById, inifiniteScrollFetch } from "@/data/poke-api";
 import { createFileRoute } from "@tanstack/react-router";
 import { useInfiniteQuery, useQueries } from "@tanstack/react-query";
 import { LocalizedName, type PokemonLocalized } from "@/data/types";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import PokemonsResults from "@/components/pokemons-results";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
