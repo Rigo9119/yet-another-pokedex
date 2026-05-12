@@ -1,5 +1,5 @@
-import LanguageSelector from "./language-selector";
-import { m } from "../paraglide/messages";
+import LanguageSelector from "../language-selector";
+import { m } from "../../paraglide/messages";
 
 export default function Header() {
   return (

@@ -4,7 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import appCss from "../styles.css?url";
-import Header from "@/components/app-header";
+import Header from "@/components/app-header/app-header";
 import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createRootRoute({

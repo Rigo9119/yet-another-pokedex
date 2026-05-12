@@ -1,7 +1,7 @@
 import { type PokemonLocalized } from "@/data/types";
 import PokemonImageCard from "./pokemon-image-card";
 import LoadingCmp from "./loaders";
-import ErrorCmp from "./error-cmp";
+import ErrorCmp from "./error-cmp/error-cmp";
 
 export interface PokemonsResultsProps {
   isSearchLoading: boolean;

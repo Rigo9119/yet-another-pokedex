@@ -9,7 +9,7 @@ import PokemonStats from "@/components/pokemon/pokemon-stats/pokemon-stats";
 import { m } from "@/paraglide/messages";
 import usePokemonData from "@/hooks/usePokemonData";
 import LoadingCmp from "@/components/loaders";
-import ErrorCmp from "@/components/error-cmp";
+import ErrorCmp from "@/components/error-cmp/error-cmp";
 import usePokemonEvolution from "@/hooks/usePokemonEvolution";
 import PokemonEvolutionChain from "@/components/pokemon/pokemon-evolution-chain/pokemon-evolution-chain";
 
