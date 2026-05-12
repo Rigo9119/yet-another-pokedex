@@ -1,6 +1,6 @@
 import { DEBOUNCE_DELAY, DEBOUNCE_SEARCH_LENGHT } from "@/constants";
 import { getAllPokemons, getResourceById } from "@/data/poke-api";
-import { useQuery, useInfiniteQuery, useQueries } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import useDebounce from "./useDebounce";
 import { LocalizedName } from "@/data/types";
 import { getLocale } from "@/paraglide/runtime";

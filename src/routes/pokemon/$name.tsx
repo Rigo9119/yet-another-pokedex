@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Ability, PokemonType, Stat } from "@/data/types";
 import { CircleArrowLeft } from "lucide-react";
 import PokemonImage from "@/components/pokemon/pokemon-image/pokemon-image";
-import PokemonTypeAbility from "@/components/pokemon/pokemon-type-ability";
+import PokemonTypeAbility from "@/components/pokemon/pokemon-type-ability/pokemon-type-ability";
 import PokemonIndividualSpec from "@/components/pokemon/pokemon-individual-spec/pokemon-individual-spec";
 import PokemonStats from "@/components/pokemon/pokemon-stats/pokemon-stats";
 import { m } from "@/paraglide/messages";
